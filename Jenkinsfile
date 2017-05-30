@@ -60,7 +60,6 @@ pipeline {
         }
       }
       steps {
-        echo 'Mooor tests'
         parallel (
           'Frontend' : {
             script {
