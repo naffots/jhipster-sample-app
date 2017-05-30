@@ -42,7 +42,7 @@ pipeline {
         echo 'Testing backend'
         unstash 'ws'
         unstash 'war'
-        sh './mvnw 'war' -B test findbugs:findbugs'
+        sh './mvnw -B test findbugs:findbugs'
       }
       post {
         success {
