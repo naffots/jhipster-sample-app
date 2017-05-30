@@ -47,13 +47,42 @@ pipeline {
       post {
         success {
           junit '**/surefire-reports/**/*.xml'
-          findbugs pattern: 'target/**/findbugsXml.xml', unstableTotalAll: '0'
+          findbugs pattern: 'target/**/findbugsXml.xml', unstableNewAll: '0'
         }
       }
     }
     stage('More Tests') {
+      agent none
+      when {
+        anyOf {
+          branch "master"
+          branch "release-*"
+        }
+      }
       steps {
         echo 'Mooor tests'
+        parallel (
+          'Frontend' : {
+            script {
+              node {
+                unstash 'ws''
+                //sh 'gulp test'
+                sh './frontEndTests.sh'
+              }
+            }
+          },
+          'Performance' : {
+            script {
+              node {
+                docker.image('maven:3-alpine').inside('-v $HOME/.m2:/root/.m2') {
+                  unstash 'ws'
+                  unstash 'war'
+                  sh './mvnw -B gatling:execute'
+                }
+              }
+            }
+          }
+        )
       }
     }
   }
