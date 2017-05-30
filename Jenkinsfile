@@ -48,6 +48,7 @@ pipeline {
         success {
           junit '**/surefire-reports/**/*.xml'
           findbugs pattern: 'target/**/findbugsXml.xml', unstableTotalAll: '0'
+        }
       }
     }
     stage('More Tests') {
