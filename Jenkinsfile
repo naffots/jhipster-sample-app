@@ -86,6 +86,10 @@ pipeline {
     }
     stage('Deploy to staging') {
       agent any
+      steps {
+        input message: 'Deploy to production?', ok: 'Fire zee missiles!'
+        echo 'Deployed'
+      }
     } 
   }
 }
