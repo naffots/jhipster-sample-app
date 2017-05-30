@@ -65,7 +65,7 @@ pipeline {
           'Frontend' : {
             script {
               node {
-                unstash 'ws''
+                unstash 'ws'
                 //sh 'gulp test'
                 sh './frontEndTests.sh'
               }
