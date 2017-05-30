@@ -47,7 +47,7 @@ pipeline {
       post {
         success {
           junit '**/surefire-reports/**/*.xml'
-          findbugs pattern: 'target/**/findbugsXml.xml', unstableNewAll: '0'
+          //findbugs pattern: 'target/**/findbugsXml.xml', unstableNewAll: '0'
         }
       }
     }
@@ -84,5 +84,8 @@ pipeline {
         )
       }
     }
+    stage('Deploy to staging') {
+      agent any
+    } 
   }
 }
